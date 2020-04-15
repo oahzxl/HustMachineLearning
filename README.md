@@ -1,1 +1,1 @@
-# 华中科技大学18级机器学习作业
+# HUST-Machine-Learning

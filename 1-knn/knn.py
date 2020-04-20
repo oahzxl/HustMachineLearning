@@ -1,6 +1,8 @@
+import random
+
 import torch
 
-from utils import Counter
+from utils import Counter, plot
 
 
 class KNN(object):
@@ -21,6 +23,18 @@ class KNN(object):
             inputs[label] = 999
             self.counter.update(self.label[label])
         return self.counter.max()
+
+    def plot(self, images):
+        p = []
+        r = random.randint(0, (images.shape[0] - 1))
+        image = images[r, :]
+        inputs = (self.data - image) ** 2
+        inputs = torch.sum(inputs, dim=1)
+        for i in range(self.k):
+            label = torch.argmin(inputs)
+            inputs[label] = 999
+            p.append(self.data[label, :])
+        plot(p)
 
     def predict(self, images):
         outputs = torch.zeros((images.shape[0]))

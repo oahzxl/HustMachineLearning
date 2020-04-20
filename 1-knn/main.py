@@ -4,10 +4,10 @@ import logging
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train', action='store_true', default=True)
+    parser.add_argument('--train', action='store_true', default=False)
     parser.add_argument('--evaluate', action='store_true', default=True)
     parser.add_argument('--batch-size', type=int, default=1000)
-    parser.add_argument('--k', type=int, default=2)
+    parser.add_argument('--k', type=int, default=3)
     parser.add_argument('--path', type=str, default='data/')
     parser.add_argument('--plot', action='store_true', default=True)
     parser.add_argument('--scale', type=float, default=0.6)

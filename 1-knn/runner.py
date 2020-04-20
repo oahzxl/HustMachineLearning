@@ -38,6 +38,9 @@ class Runner:
         self.acc_meter.reset()
         self.time_meter.reset()
 
+        if (not train) and self.args.plot:
+            self.model.plot(images)
+
         for i in range(int(len(labels) / self.args.batch_size)):
             if i != int(len(labels / self.args.batch_size)):
                 image = images[i * self.args.batch_size:(i + 1) * self.args.batch_size]

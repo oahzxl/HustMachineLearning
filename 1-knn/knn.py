@@ -1,8 +1,9 @@
 import random
 
 import torch
+import tqdm
 
-from utils import Counter, plot
+from utils import Counter, plot_neighbour
 
 
 class KNN(object):
@@ -25,7 +26,7 @@ class KNN(object):
         return self.counter.max()
 
     def plot(self, images):
-        p = []
+        neighbour = []
         r = random.randint(0, (images.shape[0] - 1))
         image = images[r, :]
         inputs = (self.data - image) ** 2
@@ -33,12 +34,12 @@ class KNN(object):
         for i in range(self.k):
             label = torch.argmin(inputs)
             inputs[label] = 999
-            p.append(self.data[label, :])
-        plot(p)
+            neighbour.append(self.data[label, :])
+        plot_neighbour(neighbour)
 
     def predict(self, images):
         outputs = torch.zeros((images.shape[0]))
-        for i in range(images.shape[0]):
+        for i in tqdm.tqdm(range(int(images.shape[0]))):
             x = self._get_neighbour(images[i, :])
             outputs[i] = x
         return outputs

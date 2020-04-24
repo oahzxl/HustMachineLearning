@@ -29,8 +29,8 @@ class Runner:
             images, labels = self.test_data
         else:
             images, labels = self.eval_data
-        images = torch.tensor(images[:100]).to(self.device)
-        labels = torch.tensor(labels[:100]).to(self.device)
+        images = torch.tensor(images).to(self.device)
+        labels = torch.tensor(labels).to(self.device)
 
         outputs = self.model.predict(images).to(self.device)
         acc = torch.sum(labels == outputs).float() / labels.shape[0]

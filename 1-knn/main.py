@@ -16,9 +16,9 @@ def parse_args():
                         help='data path')
     parser.add_argument('--plot', action='store_true', default=True,
                         help='show an image\'s k nearest neighbours')
-    parser.add_argument('--acc', action='store_true', default=True,
+    parser.add_argument('--acc', action='store_true', default=False,
                         help='show loss of different k')
-    parser.add_argument('--scale', type=float, default=0.6,
+    parser.add_argument('--scale', type=float, default=0.7,
                         help='train data / total data')
     return parser.parse_args()
 

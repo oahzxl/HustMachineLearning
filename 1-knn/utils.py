@@ -5,7 +5,7 @@ import torch
 
 
 def plot_acc(loss):
-    plt.plot(range(len(loss), loss))
+    plt.plot(range(1, len(loss) + 1), loss)
     plt.show()
 
 

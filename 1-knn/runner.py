@@ -33,7 +33,7 @@ class Runner:
         labels = torch.tensor(labels).to(self.device)
 
         outputs = self.model.predict(images).to(self.device)
-        acc = torch.sum(labels == outputs).float() / labels.shape[0]
+        acc = torch.sum(labels == outputs.int()).float() / labels.shape[0]
         logging.info('K = %d, Acc = %.2f%%' % (
             self.model.k, acc * 100
         ))
@@ -41,9 +41,9 @@ class Runner:
 
     def acc(self):
         loss = []
-        for k in range(1, 6):
+        for k in range(1, self.args.acc_k_range + 1):
             self._build_model(k)
-            loss.append(float(self.predict(train=False)))
+            loss.append(float(self.predict(train=False) * 100))
         plot_acc(loss)
 
     def plot(self):

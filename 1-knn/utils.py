@@ -1,11 +1,15 @@
 import math
 
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 
 
 def plot_acc(loss):
     plt.plot(range(1, len(loss) + 1), loss)
+    plt.xticks(np.arange(1, len(loss) + 1, 1))
+    plt.xlabel('K')
+    plt.ylabel('Acc')
     plt.show()
 
 

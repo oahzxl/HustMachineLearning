@@ -1,14 +1,12 @@
-import os
-import struct
-import tqdm
-import re
 import csv
-import jieba
 import random
-import numpy as np
+import re
+
+import jieba
+import tqdm
 from torchtext.data import Dataset
-import codecs
 from torchtext.data import Example
+
 from utils import *
 
 

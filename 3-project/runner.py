@@ -1,13 +1,15 @@
 import logging
-import random
-import torch.nn as nn
-import torch.backends.cudnn
-from models_ import *
 import os
-from get_dataset import get_dataset
-from utils import *
+import random
+
+import torch.backends.cudnn
+import torch.nn as nn
 from torchtext.data import Field, LabelField
 from torchtext.data.iterator import BucketIterator
+
+from get_dataset import get_dataset
+from models_ import *
+from utils import *
 
 
 class Runner:

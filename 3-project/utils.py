@@ -1,10 +1,7 @@
-import math
-import numpy as np
-
-import torch.backends.cudnn
-import matplotlib.pyplot as plt
-import torch
 import time
+
+import torch
+import torch.backends.cudnn
 
 
 class AverageMeter(object):

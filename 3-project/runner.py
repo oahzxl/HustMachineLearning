@@ -72,11 +72,11 @@ class Runner:
             # torch.save(self.model.state_dict(), path)
             # logging.info('model saved to %s' % path)
             # self.eval()
-        print('Done.')
+        logging.info('Done.')
 
     def _train_one_epoch(self, epoch):
         self.model.train()
-        loss_meter = AverageMeter()
+        loss_meter1 = AverageMeter()
         time_meter = TimeMeter()
         for b, (text, label) in enumerate(self.train_iter, 1):
 
@@ -90,16 +90,14 @@ class Runner:
             self.optimizer.step()
             self.scheduler.step(epoch - 1 + b / len(self.train_iter))
 
-            loss_meter.update(loss.item())
+            loss_meter1.update(loss.item())
             time_meter.update()
-        print('Epoch %2d, %.3f seconds/batch, train loss = %.4f, ' % (
-            epoch, 1.0 / time_meter.avg, loss_meter.avg
-        ), end='')
 
         self.model.eval()
         with torch.no_grad():
             acc_meter = AverageMeter()
-            loss_meter = AverageMeter()
+            loss_meter2 = AverageMeter()
+            f1_meter = F1Meter()
 
             for b, (text, label) in enumerate(self.evl_iter, 1):
                 text = text.to(self.device)
@@ -109,10 +107,16 @@ class Runner:
                 outputs = torch.argmax(outputs, dim=-1)
                 acc = torch.sum(outputs == label)
                 acc_meter.update(acc, self.args.batch_size)
-                loss_meter.update(loss.item())
+                f1_meter.update(outputs, label)
+                loss_meter2.update(loss.item())
 
-            print('evl loss = %.4f, acc = %.4f' % (
-                loss_meter.avg, acc_meter.avg
+        p, p0, p1, p2, r, r0, r1, r2, f1 = f1_meter.get()
+        logging.info(
+            'Epoch %2d, train loss = %.3f, evl loss = %.3f, '
+            'acc = %.3f, p = %.3f, p0 = %.3f, p1 = %.3f, p2 = %.3f, '
+            'r = %.3f, r0 = %.3f, r1 = %.3f, r2 = %.3f, f1 = %.3f' % (
+                epoch, loss_meter1.avg, loss_meter2.avg, acc_meter.avg,
+                p, p0, p1, p2, r, r0, r1, r2, f1
             ))
 
     def eval(self):

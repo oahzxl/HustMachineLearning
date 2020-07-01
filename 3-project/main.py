@@ -31,10 +31,10 @@ def main(args):
     print(args)
     runner = Runner(args)
     if args.train:
-        print("Start training...")
+        logging.info("Start training...")
         runner.train()
     if args.eval:
-        print("Start evaluating...")
+        logging.info("Start evaluating...")
         runner.eval()
 
 

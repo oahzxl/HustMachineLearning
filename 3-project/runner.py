@@ -54,8 +54,8 @@ class Runner:
 
     def _build_model(self):
         # self.model = FC(self.args, self.vocab)
-        # self.model = RNN(self.args, self.vocab)
-        self.model = TextCNN(self.args, self.vocab)
+        self.model = RNN(self.args, self.vocab)
+        # self.model = TextCNN(self.args, self.vocab)
         # self.model = Attention(self.args, self.vocab)
 
         self.model.to(self.device)

@@ -2,6 +2,7 @@ import logging
 import os
 import random
 
+import numpy as np
 import torch.backends.cudnn
 import torch.nn as nn
 from torchtext.data import Field, LabelField

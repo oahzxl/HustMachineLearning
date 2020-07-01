@@ -19,6 +19,6 @@ class RNN(nn.Module):
         x = f.dropout(f.relu(x), self.args.dropout, self.training)
         x = self.fc1(x)
         x = f.dropout(f.relu(x), self.args.dropout, self.training)
-        x = x.view(x.size(0), -1)
+        x = x.reshape(x.size(0), -1)
         x = self.fc2(x)
         return x

@@ -12,6 +12,6 @@ class FC(nn.Module):
     def forward(self, x):
         x = self.emb(x)
         x = self.fc1(x)
-        x = x.view(x.size(0), -1)
+        x = x.reshape(x.size(0), -1)
         x = self.fc2(x)
         return x

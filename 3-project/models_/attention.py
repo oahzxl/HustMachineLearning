@@ -26,6 +26,6 @@ class Attention(nn.Module):
         x = f.dropout(f.relu(x), self.args.dropout, self.training)
         x = self.rnn(x)[0]
         x = f.dropout(f.relu(x), self.args.dropout, self.training)
-        x = x.view(x.size(0), -1)
+        x = x.reshape(x.size(0), -1)
         x = self.fc(x)
         return x

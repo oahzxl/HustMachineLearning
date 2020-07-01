@@ -1,9 +1,9 @@
 import csv
 import random
 import re
+import numpy as np
 
 import jieba
-import numpy as np
 import tqdm
 from torchtext.data import Dataset
 from torchtext.data import Example
@@ -38,8 +38,8 @@ def process_data():
     # read data
     csv_reader = csv.reader(open(r'./data/train.csv', encoding='utf-8'))
     data = list(csv_reader)[1:]
-    # csv_reader = csv.reader(open(r'./data/test_labled.csv', encoding='utf-8'))
-    # data = data + list(csv_reader)[1:]
+    csv_reader = csv.reader(open(r'./data/test_labled.csv', encoding='utf-8'))
+    data = data + list(csv_reader)[1:]
 
     # split
     for i in tqdm.tqdm(range(len(data))):
@@ -51,9 +51,9 @@ def process_data():
 
     # save
     random.shuffle(data)
-    save_data("./data/processed/train.txt", data[:int(45000 * 0.6)])
-    save_data("./data/processed/test.txt", data[int(45000 * 0.6):int(45000 * 0.8)])
-    save_data("./data/processed/eval.txt", data[int(45000 * 0.8):])
+    save_data("./data/processed/train.txt", data[:int(45000 * 0.8)])
+    save_data("./data/processed/test.txt", data[int(45000 * 0.8):45000])
+    save_data("./data/processed/eval.txt", data[45000:])
 
 
 def save_data(file_name, data):

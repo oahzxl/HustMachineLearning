@@ -20,12 +20,10 @@ class TextCNN(nn.Module):
 
     def forward(self, x):
         x = self.emb(x)
-        # x = self.rnn(x)[0]
-        # x = self.dropout(x)
         x = x.unsqueeze(1)
         x = [f.relu(conv(x)).squeeze(3) for conv in self.convs]
         x = [f.max_pool1d(item, item.size(2)).squeeze(2) for item in x]
         x = torch.cat(x, 1)
         x = self.dropout(x)
-        logits = self.fc(x)
-        return logits
+        x = self.fc(x)
+        return x

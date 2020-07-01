@@ -23,7 +23,7 @@ class Runner:
         self._build_model()
 
     def _build_loader(self):
-        logging.info("Loading data...")
+        print("Loading data...")
 
         TEXT = Field(batch_first=True, fix_length=self.args.max_words)
         LABEL = LabelField(sequential=False, batch_first=True, use_vocab=False)
@@ -71,8 +71,8 @@ class Runner:
             # path = os.path.join(self.args.model_saved_path, 'model-%d' % epoch)
             # torch.save(self.model.state_dict(), path)
             # logging.info('model saved to %s' % path)
-            self.eval()
-        logging.info('Done.')
+            # self.eval()
+        print('Done.')
 
     def _train_one_epoch(self, epoch):
         self.model.train()
@@ -96,13 +96,32 @@ class Runner:
             epoch, 1.0 / time_meter.avg, loss_meter.avg
         ), end='')
 
-    def eval(self):
         self.model.eval()
         with torch.no_grad():
             acc_meter = AverageMeter()
             loss_meter = AverageMeter()
 
             for b, (text, label) in enumerate(self.evl_iter, 1):
+                text = text.to(self.device)
+                label = label.to(self.device)
+                outputs = self.model(text).squeeze(-1)
+                loss = self.criteria(outputs, label)
+                outputs = torch.argmax(outputs, dim=-1)
+                acc = torch.sum(outputs == label)
+                acc_meter.update(acc, self.args.batch_size)
+                loss_meter.update(loss.item())
+
+            print('evl loss = %.4f, acc = %.4f' % (
+                loss_meter.avg, acc_meter.avg
+            ))
+
+    def eval(self):
+        self.model.eval()
+        with torch.no_grad():
+            acc_meter = AverageMeter()
+            loss_meter = AverageMeter()
+
+            for b, (text, label) in enumerate(self.test_iter, 1):
 
                 text = text.to(self.device)
                 label = label.to(self.device)
@@ -113,6 +132,6 @@ class Runner:
                 acc_meter.update(acc, self.args.batch_size)
                 loss_meter.update(loss.item())
 
-            print('test loss = %.4f, acc = %.4f' % (
+            print('test loss = %.4f, test acc = %.4f' % (
                 loss_meter.avg, acc_meter.avg
             ))

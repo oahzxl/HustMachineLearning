@@ -14,11 +14,11 @@ from utils import *
 
 def get_dataset(mode, field):
     if mode == "train":
-        data = read_txt(r'../data/processed/train.txt')
+        data = read_txt(r'./data/processed/train.txt')
     elif mode == "test":
-        data = read_txt(r'../data/processed/test.txt')
+        data = read_txt(r'./data/processed/test.txt')
     elif mode == "eval":
-        data = read_txt(r'../data/processed/eval.txt')
+        data = read_txt(r'./data/processed/eval.txt')
     else:
         raise KeyError("Mode must be train, test or eval!")
 
@@ -37,9 +37,9 @@ def process_data():
     random.seed(2020)
 
     # read data
-    csv_reader = csv.reader(open(r'../data/train.csv', encoding='utf-8'))
+    csv_reader = csv.reader(open(r'./data/train.csv', encoding='utf-8'))
     data = list(csv_reader)[1:]
-    csv_reader = csv.reader(open(r'../data/test_labled.csv', encoding='utf-8'))
+    csv_reader = csv.reader(open(r'./data/test_labled.csv', encoding='utf-8'))
     data = data + list(csv_reader)[1:]
 
     # split

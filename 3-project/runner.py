@@ -63,7 +63,7 @@ class Runner:
         if not os.path.exists(self.args.model_saved_path):
             os.makedirs(self.args.model_saved_path)
         for epoch in range(1, self.args.max_num_epochs + 1):
-            logging.info('Start Epoch {}'.format(epoch))
+            # logging.info('Start Epoch {}'.format(epoch))
             self._train_one_epoch(epoch)
             # path = os.path.join(self.args.model_saved_path, 'model-%d' % epoch)
             # torch.save(self.model.state_dict(), path)
@@ -89,11 +89,9 @@ class Runner:
 
             loss_meter.update(loss.item())
             time_meter.update()
-            if b % self.args.display_n_batches == 0:
-                logging.info('Epoch %d, Batch %3d, loss = %.4f, %.3f seconds/batch' % (
-                    epoch, b, loss_meter.avg, 1.0 / time_meter.avg
-                ))
-                loss_meter.reset()
+        print('Epoch %2d, %.3f seconds/batch, train loss = %.4f, ' % (
+            epoch, 1.0 / time_meter.avg, loss_meter.avg
+        ), end='')
 
     def eval(self):
         self.model.eval()
@@ -112,6 +110,6 @@ class Runner:
                 acc_meter.update(acc, self.args.batch_size)
                 loss_meter.update(loss.item())
 
-            logging.info('loss = %.4f, acc = %.4f' % (
+            print('test loss = %.4f, acc = %.4f' % (
                 loss_meter.avg, acc_meter.avg
             ))

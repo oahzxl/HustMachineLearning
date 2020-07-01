@@ -14,15 +14,13 @@ def parse_args():
                         help='')
     parser.add_argument('--dropout', type=float, default=0.2,
                         help='')
-    parser.add_argument('--batch-size', type=int, default=64,
+    parser.add_argument('--batch-size', type=int, default=32,
                         help='')
     parser.add_argument('--d-model', type=int, default=300,
                         help='')
     parser.add_argument('--max-words', type=int, default=80,
                         help='')
     parser.add_argument('--max-num-epochs', type=int, default=10,
-                        help='')
-    parser.add_argument('--display-n-batches', type=int, default=100,
                         help='')
     parser.add_argument('--model-saved-path', type=str, default=r"./result",
                         help='')

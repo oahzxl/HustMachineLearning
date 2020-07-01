@@ -20,7 +20,7 @@ def parse_args():
                         help='')
     parser.add_argument('--max-words', type=int, default=80,
                         help='')
-    parser.add_argument('--max-num-epochs', type=int, default=10,
+    parser.add_argument('--max-num-epochs', type=int, default=20,
                         help='')
     parser.add_argument('--model-saved-path', type=str, default=r"./result",
                         help='')
@@ -28,7 +28,7 @@ def parse_args():
 
 
 def main(args):
-    print(args)
+    logging.info(args)
     runner = Runner(args)
     if args.train:
         logging.info("Start training...")
